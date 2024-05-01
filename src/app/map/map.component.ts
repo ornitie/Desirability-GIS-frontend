@@ -21,7 +21,9 @@ export class MapComponent implements OnInit {
 
     const map = L.map('map').setView(center, 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const baseMap = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+
+    L.tileLayer(baseMap, {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
