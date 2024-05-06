@@ -14,16 +14,15 @@ export class MapComponent implements OnInit {
     private geoLocalizationService: GeoLocalizationService
   ) { }
 
-  //map: L.Map = L.map('map');
-
   ngOnInit(): void {
     const center = L.latLng(4.6018, -74.0721);
 
     const map = L.map('map').setView(center, 13);
 
-    const baseMap = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+    const lightMap = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+    const darkMap = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
 
-    L.tileLayer(baseMap, {
+    L.tileLayer(true ? darkMap : lightMap, {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
@@ -44,33 +43,6 @@ export class MapComponent implements OnInit {
 
     this.obtenerUbicacionYCentrarMapa(map);
   }
-
-  // ngAfterViewInit(): void {
-  //   const center = L.latLng(4.6018, -74.0721);
-
-  //   this.map = L.map('map').setView(center, 13);
-
-  //   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  //   }).addTo(this.map);
-
-  //   L.circle(center, {
-  //     color: 'green',
-  //     fillColor: 'green',
-  //     fillOpacity: 0.5,
-  //     radius: 1000 
-  //   }).addTo(this.map);
-
-  //   L.marker(center, {
-  //     icon: L.divIcon({
-  //       className: 'circle-label',
-  //       html: 'Centro de Bogotá',
-  //       iconAnchor: [75, 0]
-  //     })
-  //   }).addTo(this.map);
-
-    // this.obtenerUbicacionYCentrarMapa();
-  // }
 
   private obtenerUbicacionYCentrarMapa(map: L.Map): void {
     this.geoLocalizationService.obtenerUbicacion().subscribe(
