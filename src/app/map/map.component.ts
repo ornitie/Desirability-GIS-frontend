@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { GeoLocalizationService } from '../geo-localization.service';
-// import { GeoLocalizationService } from '../geo-localization.service';
 
 @Component({
   selector: 'app-map',
@@ -10,6 +9,8 @@ import { GeoLocalizationService } from '../geo-localization.service';
 })
 export class MapComponent implements OnInit {
 
+  private map!: L.Map;
+
   constructor(
     private geoLocalizationService: GeoLocalizationService
   ) { }
@@ -17,21 +18,21 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {
     const center = L.latLng(4.6018, -74.0721);
 
-    const map = L.map('map').setView(center, 13);
+    this.map = L.map('map').setView(center, 13);
 
-    const lightMap = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-    const darkMap = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+    const lightMap = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+    const darkMap = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
 
     L.tileLayer(true ? darkMap : lightMap, {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    }).addTo(this.map);
 
     L.circle(center, {
       color: 'green',
       fillColor: 'green',
       fillOpacity: 0.5,
       radius: 1000 
-    }).addTo(map);
+    }).addTo(this.map);
 
     L.marker(center, {
       icon: L.divIcon({
@@ -39,9 +40,9 @@ export class MapComponent implements OnInit {
         html: 'Centro de Bogotá',
         iconAnchor: [75, 0]
       })
-    }).addTo(map);
+    }).addTo(this.map);
 
-    this.obtenerUbicacionYCentrarMapa(map);
+    this.obtenerUbicacionYCentrarMapa(this.map);
   }
 
   private obtenerUbicacionYCentrarMapa(map: L.Map): void {
@@ -58,4 +59,10 @@ export class MapComponent implements OnInit {
     );
   }
 
+  enableClickForCoordinates(): void {
+    this.map.on('click', (e: L.LeafletMouseEvent) => {
+      const { lat, lng } = e.latlng;
+      alert(`Latitud: ${lat}, Longitud: ${lng}`);
+    });
+  }
 }
