@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+interface GeoJSONPoint {
+  type: 'Point';
+  coordinates: [number, number];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -8,25 +13,30 @@ export class GeoLocalizationService {
 
   constructor() { }
 
-  obtenerUbicacion(): Observable<any> {
+  obtenerUbicacion(): Observable<GeoJSONPoint> {
     return new Observable(observer => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position: GeolocationPosition) => {
-            const ubicacionGeoJSON = {
-              type: 'Point',
-              coordinates: [position.coords.longitude, position.coords.latitude]
-            };
-            observer.next(ubicacionGeoJSON);
-            observer.complete();
-          },
-          (error: GeolocationPositionError) => {
-            observer.error('Error al obtener la ubicación: ' + error.message);
-          }
-        );
-      } else {
-        observer.error('Geolocalización no soportada en este navegador.');
+      if (!navigator.geolocation) {
+        observer.error('Geolocation is not supported by your browser');
+        return;
       }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coordinates: [number, number] = [
+            position.coords.longitude,
+            position.coords.latitude
+          ];
+          
+          observer.next({
+            type: 'Point',
+            coordinates: coordinates
+          });
+          observer.complete();
+        },
+        (error) => {
+          observer.error(error);
+        }
+      );
     });
   }
 }

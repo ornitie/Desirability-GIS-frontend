@@ -1,0 +1,109 @@
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.theme-toggle,
+.circle-toggle {
+  background: white;
+  border: 2px solid #4285F4;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover,
+.circle-toggle:hover {
+  background: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.circle-label {
+  background: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: 2px solid #4285F4;
+  font-weight: bold;
+  color: #4285F4;
+}
+
+.user-marker {
+  background: none !important;
+  border: none !important;
+}
+
+.user-marker-dot {
+  width: 20px;
+  height: 20px;
+  background-color: #4285F4;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #4285F4;
+}
+
+.user-location-popup {
+  padding: 10px;
+}
+
+.user-location-popup h3 {
+  margin: 0 0 10px 0;
+  color: #4285F4;
+}
+
+.user-location-popup p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .preferences-panel {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: auto;
+    max-width: none;
+    border-radius: 8px 8px 0 0;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  .theme-toggle {
+    bottom: calc(50vh + 20px);
+  }
+}
+
+.popup-content {
+  padding: 10px;
+}
+
+.popup-content h3 {
+  margin: 0 0 10px 0;
+}
+
+.popup-content ul {
+  margin: 5px 0;
+  padding-left: 20px;
+}

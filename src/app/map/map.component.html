@@ -1,3 +1,13 @@
-<div id="map" style="height: 1400px;"></div>
+<div class="map-container">
+  <div id="map"></div>
+  <div class="map-controls">
+    <button (click)="toggleMapTheme()" class="theme-toggle">
+      {{ useDarkMap ? '🌞' : '🌙' }}
+    </button>
+    <button (click)="toggleCircle()" class="circle-toggle">
+      {{ showCircle ? '🔵' : '⚪' }}
+    </button>
+  </div>
+</div>
 
 <button (click)="enableClickForCoordinates()">Obtener Coordenadas</button>
